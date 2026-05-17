@@ -1,5 +1,5 @@
 /** @name MAMAN 14 The summuray project
-* @authors Shira Kedmi & Tamar Biton
+* @authors Shira Kedmi-Dadon & Tamar Biton
 * @date 11.08.24
 * @brief This program implements an assembler in C language.
 * The assembler receives one or more files in assembly language 
