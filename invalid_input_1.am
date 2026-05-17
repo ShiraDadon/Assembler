@@ -1,3 +1,0 @@
-MAIN: add r3 ,r4
-jsr
-mov #1 r7
