@@ -8,7 +8,7 @@ Final project grade: **99**.
 
 The assembler receives assembly source files (`.as`), processes them through preprocessing, first-pass and second-pass stages, and generates machine-code output files.
 
----
+
 
 ## Assembly Process
 
@@ -24,7 +24,7 @@ Reads and validates the assembly code, builds the symbol table, encodes data and
 
 Resolves label operands using the symbol table, handles `.entry` and `.extern` declarations, and completes the final machine-code image.
 
----
+
 
 ## Main Data Structures
 
@@ -35,7 +35,7 @@ Resolves label operands using the symbol table, handles `.entry` and `.extern` d
 - **Data image** — stores encoded data directives such as numbers and strings.
 - **External references list** — stores external symbol usage addresses for the `.ext` output file.
 
----
+
 
 ## Core Modules
 
@@ -49,7 +49,7 @@ Resolves label operands using the symbol table, handles `.entry` and `.extern` d
 - `octal_translation.c` — converts machine code to the required base-8 output format.
 - `global_const.h` — global constants and shared definitions.
 
----
+
 
 ## Memory Model
 
@@ -61,7 +61,7 @@ The assembler targets a custom machine architecture with:
 - Separate instruction and data images during assembly
 - Final output in a unique base-8 representation
 
----
+
 
 ## Input Files
 
@@ -71,7 +71,7 @@ When running the program, file names should be provided without the `.as` extens
 
 Test input files are located in the `tests/` directory.
 
----
+
 
 ## Output Files
 
