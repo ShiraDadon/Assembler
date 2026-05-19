@@ -130,15 +130,4 @@ This command processes `tests/valid_input_1.as`.
 
 ---
 
-## Technologies
 
-- ANSI C
-- Makefile
-- Linux / Ubuntu development environment
-
----
-
-## Author
-
-Shira Dadon  
-Open University of Israel
