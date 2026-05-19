@@ -82,7 +82,7 @@ The assembler may generate the following files:
 - `.ent` — entry labels and their addresses.
 - `.ext` — external label usages and their addresses.
 
----
+
 
 ## Running the Program
 
