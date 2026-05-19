@@ -12,87 +12,62 @@ The assembler receives assembly source files (`.as`), processes them through pre
 
 ## Assembly Process
 
-The assembler processes each input file through several stages:
+### 1. Preprocessor
 
-### 1. Preprocessor Stage
-
-- Expands macro definitions
-- Validates macro declarations and usage
-- Creates an intermediate `.am` file
+Expands macro definitions, validates macro usage, and creates an intermediate `.am` file.
 
 ### 2. First Pass
 
-- Reads and validates assembly lines
-- Builds the symbol table
-- Encodes instructions and data that can be resolved immediately
-- Leaves label operands to be resolved during the second pass
+Reads and validates the assembly code, builds the symbol table, encodes data and instructions that can be resolved immediately, and leaves label operands for the second pass.
 
 ### 3. Second Pass
 
-- Resolves label operands using the symbol table
-- Handles `.entry` and `.extern` declarations
-- Completes the machine-code image
-
-### 4. Output Generation
-
-Generates output files according to the source file content:
-
-- `.ob` — object file
-- `.ent` — entry labels
-- `.ext` — external label usages
+Resolves label operands using the symbol table, handles `.entry` and `.extern` declarations, and completes the final machine-code image.
 
 ---
 
 ## Main Data Structures
 
-The assembler relies on several core data structures:
-
 - **Symbol table** — stores labels, memory addresses, and symbol attributes such as code, data, entry, or external.
-- **Macro table** — stores macro names and their expanded content during the preprocessing stage.
+- **Macro table** — stores macro names and their expanded content during preprocessing.
 - **Line structure** — represents a parsed assembly line, including labels, commands, directives, and operands.
 - **Code image** — stores encoded instruction words before generating the object file.
 - **Data image** — stores encoded data directives such as numbers and strings.
-- **External references list** — stores the memory addresses in which external symbols are used, so they can be written to the `.ext` output file.
+- **External references list** — stores external symbol usage addresses for the `.ext` output file.
 
 ---
 
 ## Core Modules
 
-| File | Description |
-|---|---|
-| `assembler.c` | Main program entry point and file management |
-| `preprocessor.c` | Handles preprocessing stage and macro expansion |
-| `macro_structure.c` | Manages macro data structures |
-| `first_pass.c` | Performs the first pass of the assembler |
-| `first_pass_func.c` | Helper functions used during the first pass |
-| `second_pass.c` | Performs the second pass of the assembler |
-| `second_pass_func.c` | Helper functions used during the second pass |
-| `command_parsing.c` | Parses assembly commands and operands |
-| `line_structure.c` | Handles line parsing and line representation |
-| `octal_translation.c` | Converts binary machine code to unique base-8 representation |
-| `tables.c` | Symbol tables and related operations |
-| `generic_linked_list.c` | Generic linked-list implementation used throughout the project |
-| `global_const.h` | Global constants and shared definitions |
+- `assembler.c` — main program entry point and file handling.
+- `preprocessor.c`, `macro_structure.c` — handle macro expansion and preprocessing.
+- `first_pass.c`, `first_pass_func.c` — perform the first pass, including symbol-table construction and initial encoding.
+- `second_pass.c`, `second_pass_func.c` — resolve label operands, handle entries and externals, and complete the machine-code image.
+- `command_parsing.c`, `line_structure.c` — parse assembly lines, commands, directives, and operands.
+- `tables.c` — manages symbol tables and related operations.
+- `generic_linked_list.c` — generic linked-list implementation used across the project.
+- `octal_translation.c` — converts machine code to the required base-8 output format.
+- `global_const.h` — global constants and shared definitions.
 
 ---
 
 ## Memory Model
 
-The assembler targets a custom machine architecture with a memory size of **4096 memory cells** and **8 registers**.
+The assembler targets a custom machine architecture with:
 
-- Each memory word contains **15 bits**
-- The machine supports **8 registers**
-- Instructions and data are stored separately during assembly
-- Symbol addresses are resolved during the two-pass process
-- The final output is generated in a unique base-8 representation
+- 4096 memory cells
+- 8 registers
+- 15-bit memory words
+- Separate instruction and data images during assembly
+- Final output in a unique base-8 representation
 
 ---
 
 ## Input Files
 
-The assembler processes assembly source files with the `.as` extension.
+The assembler processes source files with the `.as` extension.
 
-When running the program, file names should be provided **without** the `.as` extension, since the assembler appends it internally.
+When running the program, file names should be provided without the `.as` extension, because the assembler appends it internally.
 
 Test input files are located in the `tests/` directory.
 
@@ -100,20 +75,18 @@ Test input files are located in the `tests/` directory.
 
 ## Output Files
 
-Depending on the source file content, the assembler may generate:
+The assembler may generate the following files:
 
-| Extension | Description |
-|---|---|
-| `.am` | Expanded source file after macro processing |
-| `.ob` | Object file containing machine code in unique base-8 |
-| `.ent` | Entry labels and their addresses |
-| `.ext` | External labels and usage addresses |
+- `.am` — expanded source file after macro processing.
+- `.ob` — object file containing the translated machine code.
+- `.ent` — entry labels and their addresses.
+- `.ext` — external label usages and their addresses.
 
 ---
 
 ## Running the Program
 
-Compile the project using:
+Compile the project:
 
 ```bash
 make
@@ -132,3 +105,4 @@ Example:
 ```
 
 This command processes `tests/valid_input_1.as`.
+
