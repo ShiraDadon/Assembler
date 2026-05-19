@@ -15,23 +15,28 @@ The assembler receives assembly source files (`.as`), processes them through pre
 The assembler processes each input file through several stages:
 
 ### 1. Preprocessor Stage
+
 - Expands macro definitions
 - Validates macro declarations and usage
 - Creates an intermediate `.am` file
 
 ### 2. First Pass
+
 - Reads and validates assembly lines
 - Builds the symbol table
 - Encodes instructions and data that can be resolved immediately
-- Stores unresolved labels for the second pass
+- Leaves label operands to be resolved during the second pass
 
 ### 3. Second Pass
-- Resolves label addresses
+
+- Resolves label operands using the symbol table
 - Handles `.entry` and `.extern` declarations
 - Completes the machine-code image
 
 ### 4. Output Generation
+
 Generates output files according to the source file content:
+
 - `.ob` — object file
 - `.ent` — entry labels
 - `.ext` — external label usages
@@ -47,7 +52,7 @@ The assembler relies on several core data structures:
 - **Line structure** — represents a parsed assembly line, including labels, commands, directives, and operands.
 - **Code image** — stores encoded instruction words before generating the object file.
 - **Data image** — stores encoded data directives such as numbers and strings.
-- **Unresolved labels list** — tracks labels that are referenced before their final addresses are known and resolves them during the second pass.
+- **External references list** — stores the memory addresses in which external symbols are used, so they can be written to the `.ext` output file.
 
 ---
 
@@ -127,7 +132,3 @@ Example:
 ```
 
 This command processes `tests/valid_input_1.as`.
-
----
-
-
